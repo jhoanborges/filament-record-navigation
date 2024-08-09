@@ -47,7 +47,12 @@ trait HasRecordNavigation
     {
         $modelClass = static::$resource::getModel();
 
-        return $modelClass::find($this->recordId);
+        $modelData = $modelClass::where('uuid', $this->recordId)->first();
+        if(!$modelClass){
+            $modelData = $modelClass::where('uuid',$this->recordId)->first();
+        }
+
+        return $modelData;
     }
 
     protected function getNavigationActions(): array
